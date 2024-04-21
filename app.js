@@ -15,6 +15,10 @@ const fetchPokemons = async () => {
     pokemons.push(data);
   }
   createCards();
+  // 모든 카드를 5초간 뒤집어 앞면을 보여주기
+  setTimeout(() => {
+    cards.forEach(card => card.classList.remove('flipped'));
+  }, 5000);
 };
 
 const createCards = () => {
@@ -35,12 +39,11 @@ const createCards = () => {
 
     const backView = document.createElement('div');
     backView.classList.add('back');
-    const pokemonName = document.createElement('p');
-    pokemonName.textContent = pokemon.name;
-    backView.appendChild(pokemonName);
+    // 뒷면 텍스트 삭제
 
     card.appendChild(frontView);
     card.appendChild(backView);
+    card.classList.add('flipped'); // 카드를 앞면이 보이게 뒤집음
     card.addEventListener('click', flipCard);
     cards.push(card);
     gameBoard.appendChild(card);
