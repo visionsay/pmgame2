@@ -25,31 +25,44 @@ const createCards = () => {
   const duplicatedPokemons = [...pokemons, ...pokemons];
   duplicatedPokemons.sort(() => Math.random() - 0.5);
 
-  duplicatedPokemons.forEach(pokemon => {
-    const card = document.createElement('div');
-    card.classList.add('card');
-    card.dataset.pokemonId = pokemon.id;
+  const cardContainer = document.createElement('div');
+  cardContainer.classList.add('card-container');
 
-    const frontView = document.createElement('div');
-    frontView.classList.add('front');
+  let cardIndex = 0;
+  for (let row = 0; row < 4; row++) {
+    const rowContainer = document.createElement('div');
+    rowContainer.classList.add('row');
 
-    const image = document.createElement('img');
-    image.src = pokemon.sprites.front_default;
-    frontView.appendChild(image);
+    for (let col = 0; col < 4; col++) {
+      const pokemon = duplicatedPokemons[cardIndex];
+      const card = document.createElement('div');
+      card.classList.add('card');
+      card.dataset.pokemonId = pokemon.id;
 
-    const backView = document.createElement('div');
-    backView.classList.add('back');
-    // 뒷면 텍스트 삭제
+      const frontView = document.createElement('div');
+      frontView.classList.add('front');
+      const image = document.createElement('img');
+      image.src = pokemon.sprites.front_default;
+      frontView.appendChild(image);
 
-    card.appendChild(frontView);
-    card.appendChild(backView);
-    card.classList.add('flipped'); // 카드를 앞면이 보이게 뒤집음
-    card.addEventListener('click', flipCard);
-    cards.push(card);
-    gameBoard.appendChild(card);
-  });
+      const backView = document.createElement('div');
+      backView.classList.add('back');
+
+      card.appendChild(frontView);
+      card.appendChild(backView);
+      card.classList.add('flipped');
+      card.addEventListener('click', flipCard);
+
+      cards.push(card);
+      rowContainer.appendChild(card);
+      cardIndex++;
+    }
+
+    cardContainer.appendChild(rowContainer);
+  }
+
+  gameBoard.appendChild(cardContainer);
 };
-
 const flipCard = (e) => {
   const card = e.currentTarget;
   if (flippedCards.length < 2 && !card.classList.contains('flipped') && !matchedCards.includes(card)) {
