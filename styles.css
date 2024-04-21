@@ -1,0 +1,23 @@
+.game-board {
+    display: grid;
+    grid-template-columns: repeat(4, 100px);
+    gap: 10px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.card {
+    width: 100px;
+    height: 100px;
+    background-color: #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background-size: cover;
+    position: relative;
+}
+
+.card.back {
+    background-image: url('back.png'); /* 카드 뒷면 이미지 경로 설정 필요 */
+}
